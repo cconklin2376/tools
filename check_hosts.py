@@ -7,7 +7,7 @@ minip = 1
 maxip = 23
 
 
-print("Checking network " + netwk + " hosts(" + minip + " - " + maxip)
+print("Checking network " + netwk + " hosts(" + str(minip) + " - " + str(maxip))
 for val in range(minip, maxip):
 	hostname = netwk + str(val)
 	ret = os.system("ping -c 1 " + hostname + " > /dev/null 2>&1")
