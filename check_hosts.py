@@ -3,8 +3,12 @@ import os
 
 ips= []
 netwk = "192.168.0."
+minip = 1
+maxip = 23
 
-for val in range(1,30):
+
+print("Checking network " + netwk + " hosts(" + minip + " - " + maxip)
+for val in range(minip, maxip):
 	hostname = netwk + str(val)
 	ret = os.system("ping -c 1 " + hostname + " > /dev/null 2>&1")
 	if ret == 0:
