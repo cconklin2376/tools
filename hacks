@@ -1,0 +1,5 @@
+from: https://rwmj.wordpress.com/2010/10/26/tip-find-the-ip-address-of-a-virtual-machine/
+to view the local vm ip addresses on a box run
+$ arp -an
+
+
