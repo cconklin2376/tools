@@ -11,26 +11,20 @@ fields.
 """
 from pprint import pprint
 import json
+import Bookmark
+
 
 def load(bookmark_file):
-	with open(bookmark_file, 'r') as fin:
-		block = fin.read()
-		return json.loads(block)
-
-def get_object_by_id(bkjs,id):
-	for x in bkjs:
-		if x['id'] == id:
-			return x	
-
-
-def test_print(s):
-	pprint(s)
-
+   with open(bookmark_file, 'r') as fin:
+      block = fin.read()
+      return json.loads(block)
 
 def main():
-	k = load('bookmarks.json')
-	test_print(k[5])
-	get_object_by_id(k, '400')
+   k = load('../bookmarks.json')   	
+   test = k[5]
+   pprint(test)
+   BK = Bookmark.Bookmark(test['dateAdded'], test['index'], test['id'],test['parentId'],test['title'],test['url'])
+   print(BK.get_url())
 
 if __name__ == '__main__':
 	main()
