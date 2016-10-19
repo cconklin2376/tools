@@ -1,34 +1,37 @@
 
 # Purpose:
 
-- This was written to produce a list of package names
-that appear in the documentation as needing an install
-candidate and have a candidate on the existing OS release,
-but do not have a candidate for the new release.
+### Usage
 
+$ python package_search.py -i inputfile -o resultsfile
 
-Ubuntu-14.04 cfengine space scan and combine:
+Where 
 
-Sources:
-	/common/cfengine/ws/masterfiles/Ubuntu-14.04
-	/common/cfengine/ws/masterfiles/Ubuntu-14.04/sw
-	/common/cfengine/ws/repository/Ubuntu-14.04/etc/castle
+- inputfile is a list of packages, one per line, to be searched
 
+-  resultsfile is an output file containing the list of packages that were not found.
 
-- comb through the masterfiles softare to create raw_masterfile_pkgs
-- cat castle_software, department_software, host_software into raw files for each file
-- clean the raw files to remove duplicates, "ignore" packages and "remove" packages entries, 
-  blank lines and combine into a single file:
+The tool also writes to stdout as each package is searched
 
-cat raw* | grep -v -e '^$' | grep -v ^# | grep -v ^remove | grep -v ^ignore > combined_raw
+```
++++ package: libplot2c2 has install candidate
++++ package: libplymouth2:amd64 has install candidate
++++ package: libpng12-0:amd64 has install candidate
+--- Package libpng12-0:i386 has no install candidate.
++++ package: libpng12-dev has install candidate
++++ package: libpod-latex-perl has install candidate
++++ package: libpolkit-agent-1-0:amd64 has install candidate
+```
 
-Now run the python uniq tool to create a list of package names that are unique
- 
+Once execution is completed a status line displays the number of packages
+searched, the number found and the number not found.
 
-python make_uniq_pkg_list.py combined_raw
-->> nodupes
+### Creating a list
 
+A list of installed software on a client can be obtained in several ways. 
+The simplest is probably running:
 
-Now feed that list into package_search.py and save the outout
-python package_search.py -i <infile> -o <outile> 
+```
+$ dpkg -l | awk '{ print $2 }' > inputfile
+```
 
