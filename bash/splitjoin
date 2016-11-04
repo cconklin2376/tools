@@ -1,0 +1,27 @@
+#!/bin/bash
+# see also split.c for c implementation of 
+# this functionality
+
+
+$OLDFILE="bigtxt"
+$NEWFILE="newbigtxt"
+$BSIZE="100k"
+
+split -b ${BSIZE} ${OLDFILE}
+
+# this was for debugging so I left it
+for x in `ls -l | awk '{ print $9 }'`; do
+echo $x
+done
+
+# this may need to be sorted to ensure that the files
+# are handled in order. Unix's default behavior of
+# split names files sequentially starting at x
+for y in `ls -l x* | awk '{ print $9 }'`; do
+cat $y >> ${NEWFILE}
+done
+
+# clean up
+rm x*
+
+# diff -u ${OLDFILE} ${NEWFILE}  
