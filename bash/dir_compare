@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Compare files in two locations to ensure that the contents match
+# omits sym links and child directories
+
+
+# run on both machines/directories. If on same mach change the 
+# temp filename 
+find . -type f -exec md5sum {} \; sort -k 2 > /tmp/checksums
+
+# then run md5sum /tmp/checksums on both files. They should match.
