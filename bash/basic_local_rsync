@@ -1,0 +1,16 @@
+#!/bin/bash
+
+MIRROR_LOC='/media/conklinc/MULTIBOOT/mydocs-mirror'
+NOW=$(date +"%m-%d-%y")
+SRCDIR='/blah/users/c/o/conklinc/Work/mydocs/'
+DESTDIR='/media/conklinc/MULTIBOOT/mydocs-mirror/'
+
+if [ -d ${MIRROR_LOC} ]; then
+  # Control will enter here if $DIRECTORY exists.
+  date > ${SRCDIR}.last_sync
+  rsync -rtv ${SRCDIR} ${DESTDIR}
+  echo "The destination directory ${MIRROR_LOC} is available."
+else
+  echo "The destination directory ${MIRROR_LOC} is not available."
+  exit 1
+fi
