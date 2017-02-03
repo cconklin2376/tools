@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+UHOME="/home"
+GROUP="users"
+
+if [[ $EUID -ne 0 ]]; then
+    echo "ERROR: Must be run with root privileges."
+    exit 1
+fi
+
+echo "Enter id: "
+read uid
+
+HOMEDIR=$UHOME/$uid
+
+# create home, set permissions and ownership
+if [[ ! -e $HOMEDIR ]]; then
+    mkdir -p $HOMEDIR
+    chmod 700 $HOMEDIR
+    chown $uid.$GROUP $HOMEDIR
+    echo "Created $HOMEDIR"
+else 
+    echo "$HOMEDIR already exists. No action taken by script...Exiting."
+    exit 1
+fi
+
+# add user to /etc/users.local if not already there
+if grep "$uid" /etc/users.local
+then
+     "Unity id $uid already in /etc/users.local"
+else
+    echo $uid >> /etc/users.local
+    sort /etc/users.local -o /etc/users.local
+    echo "Added $uid to /etc/users.local"
+fi
+
+
+# add user to /etc/users.local.base if not already there
+if grep "$uid" /etc/users.local.base
+then
+     "Unity id $uid already in /etc/users.local.base"
+else
+    echo $uid >> /etc/users.local.base
+    sort /etc/users.local.base -o /etc/users.local.base
+    echo "Added $uid to /etc/users.local.base"
+fi
+
+echo "Finished config for user: $uid. You must add to sudo if needed"
