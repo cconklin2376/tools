@@ -17,7 +17,6 @@ for line in inf.readlines():
     for t in tokens:
         # ascii numbers 48 - 57
         if not (48 <= ord(t[0]) <= 57):
-            #t.join(pkgname)
             pkgname += (t + '-')
         else:
             if pkgname[-1] == '-':
